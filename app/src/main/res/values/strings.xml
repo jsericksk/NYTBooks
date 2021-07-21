@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">NYTBooks</string>
+
+    <!-- MainActivity texts -->
+    <string name="item_title">Título</string>
+    <string name="item_author">Autor</string>
+    <string name="item_description">Descrição</string>
+    <string name="api_error_401">Não autorizado.</string>
+    <string name="api_unknown_error">Erro desconhecido.</string>
+    <string name="server_error">Houve um erro ao tentar obter os dados do servidor.</string>
+
+    <string name="label_details">Detalhes</string>
+
+</resources>
