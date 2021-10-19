@@ -1,42 +1,43 @@
 package com.kproject.nytbooks.iu.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.kproject.nytbooks.data.repository.BookRepository
 import com.kproject.nytbooks.data.repository.BookResultCallback
-import com.kproject.nytbooks.models.Book
-import com.kproject.nytbooks.utils.Constants
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val bookRepository: BookRepository) : ViewModel() {
-    val booksLiveData = MutableLiveData<List<Book>>()
-    val resultTypeLiveData = MutableLiveData<Pair<Int, Int?>>()
+    private val _bookResultState = MutableStateFlow<BookResultCallback>(BookResultCallback.Loading)
+    val bookResultState: StateFlow<BookResultCallback> = _bookResultState
 
-    fun getBooks() {
-        bookRepository.getBooks { bookResult ->
-            when (bookResult) {
-                is BookResultCallback.Success -> {
-                    booksLiveData.postValue(bookResult.bookList)
-                    resultTypeLiveData.postValue(Pair(Constants.ResultCallback.SUCCESS, null))
-                }
-                is BookResultCallback.ApiError -> {
-                    if (bookResult.statusCode == 401) {
-                        resultTypeLiveData.postValue(
-                            Pair(Constants.ResultCallback.API_ERROR, bookResult.statusCode))
-                    } else {
-                        resultTypeLiveData.postValue(
-                            Pair(Constants.ResultCallback.API_ERROR, null))
+    init {
+        viewModelScope.launch {
+            bookRepository.getBooks { bookResult ->
+                when (bookResult) {
+                    is BookResultCallback.Success -> {
+                        _bookResultState.value = BookResultCallback.Success(bookResult.bookList)
                     }
-                }
-                is BookResultCallback.UnknownError -> {
-                    resultTypeLiveData.postValue(Pair(Constants.ResultCallback.UNKNOWN_ERROR, 8))
+                    is BookResultCallback.ApiError -> {
+                        if (bookResult.statusCode == 401) {
+                            _bookResultState.value = BookResultCallback.ApiError(bookResult.statusCode)
+                        } else {
+                            _bookResultState.value = BookResultCallback.UnknownError
+                        }
+                    }
+                    is BookResultCallback.UnknownError -> {
+                        _bookResultState.value = BookResultCallback.UnknownError
+                    }
+                    else ->
+                        _bookResultState.value = BookResultCallback.Loading
                 }
             }
         }
     }
 
     class MainViewModelFactory constructor(private val repository: BookRepository): ViewModelProvider.Factory {
-
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
                 MainViewModel(this.repository) as T

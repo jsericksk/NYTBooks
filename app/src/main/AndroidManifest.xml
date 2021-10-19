@@ -13,7 +13,8 @@
         android:theme="@style/Theme.NYTBooks">
         <activity
             android:name=".iu.activities.MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
