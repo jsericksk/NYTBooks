@@ -7,14 +7,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kproject.nytbooks.R
-import com.kproject.nytbooks.data.network.BooksApiDataSource
 import com.kproject.nytbooks.data.repository.BookResultCallback
 import com.kproject.nytbooks.databinding.ActivityMainBinding
 import com.kproject.nytbooks.iu.adapters.MainAdapter
 import com.kproject.nytbooks.iu.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
