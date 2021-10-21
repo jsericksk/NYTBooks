@@ -17,6 +17,6 @@ Se você desejar, pode clonar e testar o aplicativo por si mesmo. Para fazer as 
 
 ## Usos
 
-O projeto utiliza a arquitetura [MVVM](https://developer.android.com/jetpack/guide), foco principal de estudo desse projeto, bem como os componentes [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) e [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow) (anteriormente era utilizado o [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)).
+O projeto utiliza a arquitetura [MVVM](https://developer.android.com/jetpack/guide), foco principal de estudo desse projeto, bem como os componentes [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) e [StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow) (anteriormente era utilizado o [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)). Também é utilizada o [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) para injeção de dependência.
 Para a request à API é utilizada a biblioteca [Retrofit](https://github.com/square/retrofit), e para o parser JSON, a [Gson](https://github.com/google/gson). 
 Para uma melhor manipulação das views é utilizado [View Binding](https://developer.android.com/topic/libraries/view-binding).
